@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Grade Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f3f6fb;
+            font-family: 'Segoe UI', sans-serif;
+            color: #1f2937;
+        }
+
+        /* ---------- FORM ---------- */
+        .form-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-card h4 {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            padding: 10px 12px;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 0.15rem rgba(37,99,235,0.2);
+        }
+
+        .subject-input {
+            background: #f9fafb;
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        .btn-outline-secondary {
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* ---------- MARKSHEET ---------- */
+        .marksheet {
+            background: #ffffff;
+            padding: 45px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .marksheet::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            border-radius: 18px 18px 0 0;
+        }
+
+        .college-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e40af;
+        }
+
+        /* ---------- TABLE ---------- */
+        .table thead {
+            background: #eff6ff;
+        }
+
+        .table th {
+            color: #1e40af;
+            font-size: 13px;
+            border: 1px solid #dbeafe !important;
+        }
+
+        .table td {
+            border: 1px solid #e5e7eb !important;
+            background: #ffffff;
+        }
+
+        /* ---------- RESULT BOX ---------- */
+        .result-box {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        small {
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <!-- FORM -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="form-card">
+                <h4 class="text-center mb-4">Enter Student's Marks Details</h4>
+
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label">Student Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter student name">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Roll No</label>
+                        <input type="number" id="rollno" class="form-control" placeholder="Roll">
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label class="form-label">HTML</label>
+                        <input type="number" id="html" class="form-control subject-input">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">JavaScript</label>
+                        <input type="number" id="javascript" class="form-control subject-input">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Bootstrap</label>
+                        <input type="number" id="bootstrap" class="form-control subject-input">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">React JS</label>
+                        <input type="number" id="reactjs" class="form-control subject-input">
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary px-4 me-2" onclick="handleSubmit()">Calculate</button>
+                    <button class="btn btn-outline-secondary px-4" onclick="toggleMarksheet()">Toggle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MARKSHEET -->
+    <div class="marksheet d-none" id="marksheet">
+
+        <div class="text-center mb-4">
+            <div class="college-name">KRISHNA UNIVERSITY</div>
+            <small>Navsari, Gujarat, India</small>
+            <hr>
+            <h5 class="fw-bold mt-4">Performance Statement</h5>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p><strong>Student Name:</strong> <span id="nameDisplay">---</span></p>
+                <p><strong>Roll No:</strong> <span id="rollDisplay">---</span></p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p><strong>Academic Year:</strong> 2025–26</p>
+                <p><strong>Enrollment:</strong> KU-2025</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover text-center">
+                <thead>
+                <tr>
+                   
+                    <th>Subject</th>
+                    <th>Max</th>
+                    <th>Min</th>
+                    <th>Marks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>HTML</td><td>100</td><td>35</td><td id="htmlD">0</td></tr>
+                <tr><td>JavaScript</td><td>100</td><td>35</td><td id="jsD">0</td></tr>
+                <tr><td>Bootstrap</td><td>100</td><td>35</td><td id="bsD">0</td></tr>
+                <tr><td>React JS</td><td>100</td><td>35</td><td id="reactD">0</td></tr>
+                </tbody>
+                <tfoot>
+                <tr class="fw-bold">
+                    <td colspan="1">Total</td>
+                    <td>400</td>
+                    <td>-</td>
+                    <td id="total">0</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="row text-center mt-4">
+            <div class="col-md-4"><div class="result-box">Grade: <span id="grade">-</span></div></div>
+            <div class="col-md-4"><div class="result-box">Percentage: <span id="percent">-</span></div></div>
+            <div class="col-md-4"><div class="result-box">Result: <span id="result">-</span></div></div>
+        </div>
+
+        <div class="row mt-5 text-center">
+            <div class="col-6">________________<br><small>Exam Controller</small></div>
+            <div class="col-6">________________<br><small>University Seal</small></div>
+        </div>
+    </div>
+</div>
+
+<script src="./script.js"></script>
+
+</body>
+</html>
